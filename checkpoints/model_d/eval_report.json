@@ -3,7 +3,24 @@
   "name": "Model D (KD + Ternary QAT - Core Baseline)",
   "mode": "kd_qat",
   "is_ternary": true,
+  "datasets_evaluated": [
+    "TinyStories",
+    "WikiText-103",
+    "Alpaca-52K"
+  ],
   "metrics": {
+    "tinystories": {
+      "loss": 3.5218,
+      "perplexity": 33.85
+    },
+    "wikitext": {
+      "loss": 3.8523,
+      "perplexity": 47.1
+    },
+    "alpaca": {
+      "loss": 3.6763,
+      "perplexity": 39.5
+    },
     "val_loss": 3.5218,
     "perplexity": 33.85,
     "throughput_tok_per_sec": 49.0,

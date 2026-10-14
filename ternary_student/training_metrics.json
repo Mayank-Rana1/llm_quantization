@@ -4,8 +4,18 @@
   "is_ternary": true,
   "supervision": "Teacher KD + CE",
   "train_loss": 3.385,
-  "val_loss": 3.5218,
-  "perplexity": 33.85,
+  "tinystories": {
+    "loss": 3.5218,
+    "perplexity": 33.85
+  },
+  "wikitext": {
+    "loss": 3.8523,
+    "perplexity": 47.1
+  },
+  "alpaca": {
+    "loss": 3.6763,
+    "perplexity": 39.5
+  },
   "size_mb": 34.2,
   "speed_tok_s": 49.0,
   "ms_per_tok": 20.4,

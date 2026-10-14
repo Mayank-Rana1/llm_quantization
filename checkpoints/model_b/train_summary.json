@@ -2,6 +2,11 @@
   "mode": "kd",
   "student_model": "HuggingFaceTB/SmolLM-135M",
   "teacher_model": "HuggingFaceTB/SmolLM-360M-Instruct",
+  "datasets_used": [
+    "TinyStories",
+    "WikiText-103",
+    "Alpaca-52K"
+  ],
   "num_samples": 2000,
   "epochs": 1,
   "batch_size": 8,

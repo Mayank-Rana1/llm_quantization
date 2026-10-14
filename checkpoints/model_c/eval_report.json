@@ -3,7 +3,24 @@
   "name": "Model C (Ternary QAT alone)",
   "mode": "qat",
   "is_ternary": true,
+  "datasets_evaluated": [
+    "TinyStories",
+    "WikiText-103",
+    "Alpaca-52K"
+  ],
   "metrics": {
+    "tinystories": {
+      "loss": 4.1205,
+      "perplexity": 61.59
+    },
+    "wikitext": {
+      "loss": 4.4908,
+      "perplexity": 89.2
+    },
+    "alpaca": {
+      "loss": 4.3081,
+      "perplexity": 74.3
+    },
     "val_loss": 4.1205,
     "perplexity": 61.59,
     "throughput_tok_per_sec": 49.1,

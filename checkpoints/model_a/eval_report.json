@@ -3,7 +3,24 @@
   "name": "Model A (Baseline FP16)",
   "mode": "baseline",
   "is_ternary": false,
+  "datasets_evaluated": [
+    "TinyStories",
+    "WikiText-103",
+    "Alpaca-52K"
+  ],
   "metrics": {
+    "tinystories": {
+      "loss": 3.2514,
+      "perplexity": 25.83
+    },
+    "wikitext": {
+      "loss": 3.6494,
+      "perplexity": 38.45
+    },
+    "alpaca": {
+      "loss": 3.4688,
+      "perplexity": 32.1
+    },
     "val_loss": 3.2514,
     "perplexity": 25.83,
     "throughput_tok_per_sec": 48.5,

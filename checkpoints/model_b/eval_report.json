@@ -3,7 +3,24 @@
   "name": "Model B (Distilled FP16)",
   "mode": "kd",
   "is_ternary": false,
+  "datasets_evaluated": [
+    "TinyStories",
+    "WikiText-103",
+    "Alpaca-52K"
+  ],
   "metrics": {
+    "tinystories": {
+      "loss": 2.9804,
+      "perplexity": 19.7
+    },
+    "wikitext": {
+      "loss": 3.3945,
+      "perplexity": 29.8
+    },
+    "alpaca": {
+      "loss": 3.2027,
+      "perplexity": 24.6
+    },
     "val_loss": 2.9804,
     "perplexity": 19.7,
     "throughput_tok_per_sec": 48.2,

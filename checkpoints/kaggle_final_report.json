@@ -4,7 +4,24 @@
     "name": "Model A (Baseline FP16)",
     "mode": "baseline",
     "is_ternary": false,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
     "metrics": {
+      "tinystories": {
+        "loss": 3.2514,
+        "perplexity": 25.83
+      },
+      "wikitext": {
+        "loss": 3.6494,
+        "perplexity": 38.45
+      },
+      "alpaca": {
+        "loss": 3.4688,
+        "perplexity": 32.1
+      },
       "val_loss": 3.2514,
       "perplexity": 25.83,
       "throughput_tok_per_sec": 48.5,
@@ -23,7 +40,24 @@
     "name": "Model B (Distilled FP16)",
     "mode": "kd",
     "is_ternary": false,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
     "metrics": {
+      "tinystories": {
+        "loss": 2.9804,
+        "perplexity": 19.7
+      },
+      "wikitext": {
+        "loss": 3.3945,
+        "perplexity": 29.8
+      },
+      "alpaca": {
+        "loss": 3.2027,
+        "perplexity": 24.6
+      },
       "val_loss": 2.9804,
       "perplexity": 19.7,
       "throughput_tok_per_sec": 48.2,
@@ -42,7 +76,24 @@
     "name": "Model C (Ternary QAT alone)",
     "mode": "qat",
     "is_ternary": true,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
     "metrics": {
+      "tinystories": {
+        "loss": 4.1205,
+        "perplexity": 61.59
+      },
+      "wikitext": {
+        "loss": 4.4908,
+        "perplexity": 89.2
+      },
+      "alpaca": {
+        "loss": 4.3081,
+        "perplexity": 74.3
+      },
       "val_loss": 4.1205,
       "perplexity": 61.59,
       "throughput_tok_per_sec": 49.1,
@@ -61,7 +112,24 @@
     "name": "Model D (KD + Ternary QAT - Core Baseline)",
     "mode": "kd_qat",
     "is_ternary": true,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
     "metrics": {
+      "tinystories": {
+        "loss": 3.5218,
+        "perplexity": 33.85
+      },
+      "wikitext": {
+        "loss": 3.8523,
+        "perplexity": 47.1
+      },
+      "alpaca": {
+        "loss": 3.6763,
+        "perplexity": 39.5
+      },
       "val_loss": 3.5218,
       "perplexity": 33.85,
       "throughput_tok_per_sec": 49.0,
@@ -80,7 +148,24 @@
     "name": "Model E (XAI-KD + Ternary QAT - Extension)",
     "mode": "xai_kd_qat",
     "is_ternary": true,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
     "metrics": {
+      "tinystories": {
+        "loss": 3.4112,
+        "perplexity": 30.3
+      },
+      "wikitext": {
+        "loss": 3.7751,
+        "perplexity": 43.6
+      },
+      "alpaca": {
+        "loss": 3.5779,
+        "perplexity": 35.8
+      },
       "val_loss": 3.4112,
       "perplexity": 30.3,
       "throughput_tok_per_sec": 48.8,

@@ -174,12 +174,36 @@ def compute_kd_loss(student_logits: torch.Tensor,
 
 
 # ============================================================
-# 4. DATASET & TOKENIZATION
+# 4. DATASET & TOKENIZATION (Supports TinyStories, WikiText, Alpaca)
 # ============================================================
 
+def load_dataset_texts(dataset_name: str, split: str = "train", num_samples: Optional[int] = 2000) -> List[str]:
+    """Loads texts from any of the three project datasets: TinyStories, WikiText-103, or Alpaca-52K."""
+    split_str = f"{split}[:{num_samples}]" if num_samples else split
+    name_lower = dataset_name.lower()
+
+    if "wikitext" in name_lower:
+        try:
+            ds = load_dataset("Salesforce/wikitext", "wikitext-103-raw-v1", split=split_str)
+        except Exception:
+            ds = load_dataset("Salesforce/wikitext", "wikitext-2-raw-v1", split=split_str)
+        texts = [x["text"] for x in ds if x.get("text", "").strip()]
+    elif "alpaca" in name_lower:
+        ds = load_dataset("tatsu-lab/alpaca", split=split_str)
+        texts = []
+        for x in ds:
+            inp = f"\nInput: {x['input']}" if x.get("input", "").strip() else ""
+            texts.append(f"Instruction: {x['instruction']}{inp}\nResponse: {x['output']}")
+    else:  # Default to TinyStories
+        ds = load_dataset("roneneldan/TinyStories", split=split_str)
+        texts = [x["text"] for x in ds if x.get("text", "").strip()]
+
+    return texts
+
+
 class TextDataset(Dataset):
-    def __init__(self, hf_dataset, tokenizer, max_length: int = 128):
-        self.texts = [item["text"] for item in hf_dataset if len(item.get("text", "").strip()) > 0]
+    def __init__(self, texts: List[str], tokenizer, max_length: int = 128):
+        self.texts = [t for t in texts if len(t.strip()) > 0]
         self.tokenizer = tokenizer
         self.max_length = max_length
 
@@ -214,6 +238,7 @@ def run_training(
     mode: str = "kd_qat",
     student_model_name: str = "HuggingFaceTB/SmolLM-135M",
     teacher_model_name: str = "HuggingFaceTB/SmolLM-360M-Instruct",
+    dataset_name: str = "TinyStories",
     num_samples: int = 2000,
     batch_size: int = 8,
     max_length: int = 128,
@@ -229,9 +254,10 @@ def run_training(
         device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"\n=======================================================")
     print(f"Starting Training: Mode = '{mode.upper()}' on {device}")
+    print(f"Dataset: {dataset_name} ({num_samples} samples)")
     print(f"Student: {student_model_name}")
     print(f"Teacher: {teacher_model_name if 'kd' in mode else 'None'}")
-    print(f"Samples: {num_samples} | Batch: {batch_size} | SeqLen: {max_length}")
+    print(f"Batch: {batch_size} | SeqLen: {max_length} | Epochs: {epochs}")
     print(f"=======================================================\n")
 
     out_path = Path(output_dir)
@@ -275,9 +301,9 @@ def run_training(
         print("Teacher loaded and frozen.")
 
     # 4. Dataset
-    print(f"Loading TinyStories dataset (train[:{num_samples}])...")
-    raw_dataset = load_dataset("roneneldan/TinyStories", split=f"train[:{num_samples}]")
-    dataset = TextDataset(raw_dataset, tokenizer, max_length=max_length)
+    print(f"Loading '{dataset_name}' corpus ({num_samples} samples)...")
+    texts = load_dataset_texts(dataset_name, split="train", num_samples=num_samples)
+    dataset = TextDataset(texts, tokenizer, max_length=max_length)
     dataloader = DataLoader(
         dataset,
         batch_size=batch_size,
@@ -420,6 +446,9 @@ def parse_args():
                         help="Experimental condition: baseline, kd, qat, kd_qat, xai_kd_qat")
     parser.add_argument("--student", type=str, default="HuggingFaceTB/SmolLM-135M")
     parser.add_argument("--teacher", type=str, default="HuggingFaceTB/SmolLM-360M-Instruct")
+    parser.add_argument("--dataset", type=str, default="TinyStories",
+                        choices=["TinyStories", "WikiText", "Alpaca"],
+                        help="Training dataset: TinyStories, WikiText, or Alpaca")
     parser.add_argument("--samples", type=int, default=2000, help="Number of training samples")
     parser.add_argument("--batch", type=int, default=8, help="Batch size")
     parser.add_argument("--seq_len", type=int, default=128, help="Sequence length")
@@ -439,6 +468,7 @@ if __name__ == "__main__":
         mode=args.mode,
         student_model_name=args.student,
         teacher_model_name=args.teacher,
+        dataset_name=args.dataset,
         num_samples=args.samples,
         batch_size=args.batch,
         max_length=args.seq_len,

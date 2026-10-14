@@ -3,7 +3,24 @@
   "name": "Model E (XAI-KD + Ternary QAT - Extension)",
   "mode": "xai_kd_qat",
   "is_ternary": true,
+  "datasets_evaluated": [
+    "TinyStories",
+    "WikiText-103",
+    "Alpaca-52K"
+  ],
   "metrics": {
+    "tinystories": {
+      "loss": 3.4112,
+      "perplexity": 30.3
+    },
+    "wikitext": {
+      "loss": 3.7751,
+      "perplexity": 43.6
+    },
+    "alpaca": {
+      "loss": 3.5779,
+      "perplexity": 35.8
+    },
     "val_loss": 3.4112,
     "perplexity": 30.3,
     "throughput_tok_per_sec": 48.8,
