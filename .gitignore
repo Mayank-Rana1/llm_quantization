@@ -1,0 +1,8 @@
+trained_student/
+*.safetensors
+*.bin
+*.pt
+*.ckpt
+__pycache__/
+venv/
+*.pyc
