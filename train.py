@@ -1,4 +1,7 @@
+import json
 import math
+from pathlib import Path
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -340,6 +343,7 @@ print("=" * 65)
 total_loss_value = 0.0
 total_ce_value = 0.0
 total_kd_value = 0.0
+history = []
 
 for step, sample in enumerate(dataset):
 
@@ -465,6 +469,13 @@ for step, sample in enumerate(dataset):
     total_kd_value += kd.item()
     total_loss_value += loss.item()
 
+    history.append({
+        "step": step + 1,
+        "ce_loss": round(ce.item(), 4),
+        "kd_loss": round(kd.item(), 4),
+        "total_loss": round(loss.item(), 4)
+    })
+
     print(
         f"Step {step + 1:03d}/{NUM_SAMPLES} | "
         f"CE {ce.item():.4f} | "
@@ -538,6 +549,8 @@ print(
 
 print("\nSaving model...")
 
+Path(SAVE_PATH).mkdir(parents=True, exist_ok=True)
+
 student.save_pretrained(
     SAVE_PATH
 )
@@ -546,7 +559,28 @@ tokenizer.save_pretrained(
     SAVE_PATH
 )
 
+metrics_file = Path(SAVE_PATH) / "training_metrics.json"
+metrics_data = {
+    "teacher_model": TEACHER_MODEL,
+    "student_model": STUDENT_MODEL,
+    "num_samples": NUM_SAMPLES,
+    "temperature": TEMPERATURE,
+    "alpha": ALPHA,
+    "learning_rate": LEARNING_RATE,
+    "ternary_threshold": TERNARY_THRESHOLD,
+    "average_ce": round(average_ce, 4),
+    "average_kd": round(average_kd, 4),
+    "average_loss": round(average_loss, 4),
+    "approx_perplexity": round(perplexity, 2),
+    "history": history
+}
+metrics_file.write_text(json.dumps(metrics_data, indent=2))
+
 print(
-    "Saved to:",
+    "Saved model to:",
     SAVE_PATH
+)
+print(
+    "Saved metrics to:",
+    metrics_file
 )

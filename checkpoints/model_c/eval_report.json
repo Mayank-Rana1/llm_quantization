@@ -1,0 +1,19 @@
+{
+  "model_key": "model_c",
+  "name": "Model C (Ternary QAT alone)",
+  "mode": "qat",
+  "is_ternary": true,
+  "metrics": {
+    "val_loss": 4.1205,
+    "perplexity": 61.59,
+    "throughput_tok_per_sec": 49.1,
+    "latency_ms_per_token": 20.3
+  },
+  "footprint": {
+    "total_parameters": 134515200,
+    "fp16_size_mb": 269.1,
+    "packed_2bit_mb": 34.2,
+    "compression_ratio_vs_fp16": "7.87x"
+  },
+  "generation_sample": "Once upon a time, Lily found key. The key was big and dog was there. They play with ball."
+}

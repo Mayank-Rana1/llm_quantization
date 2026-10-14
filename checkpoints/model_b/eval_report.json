@@ -1,0 +1,19 @@
+{
+  "model_key": "model_b",
+  "name": "Model B (Distilled FP16)",
+  "mode": "kd",
+  "is_ternary": false,
+  "metrics": {
+    "val_loss": 2.9804,
+    "perplexity": 19.7,
+    "throughput_tok_per_sec": 48.2,
+    "latency_ms_per_token": 20.7
+  },
+  "footprint": {
+    "total_parameters": 134515200,
+    "fp16_size_mb": 269.1,
+    "packed_2bit_mb": 269.1,
+    "compression_ratio_vs_fp16": "1.00x"
+  },
+  "generation_sample": "Once upon a time, a little girl named Lily found a small lost bird in the forest. She gave it water and it sang a sweet song."
+}

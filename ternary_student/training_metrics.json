@@ -1,0 +1,13 @@
+{
+  "name": "Model D (KD + Ternary QAT - Core Baseline)",
+  "mode": "kd_qat",
+  "is_ternary": true,
+  "supervision": "Teacher KD + CE",
+  "train_loss": 3.385,
+  "val_loss": 3.5218,
+  "perplexity": 33.85,
+  "size_mb": 34.2,
+  "speed_tok_s": 49.0,
+  "ms_per_tok": 20.4,
+  "sample": "Once upon a time, a little girl named Lily found a shiny silver box. Inside, she saw a happy surprise and smiled brightly."
+}

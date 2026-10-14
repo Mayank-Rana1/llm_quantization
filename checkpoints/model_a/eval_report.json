@@ -1,0 +1,19 @@
+{
+  "model_key": "model_a",
+  "name": "Model A (Baseline FP16)",
+  "mode": "baseline",
+  "is_ternary": false,
+  "metrics": {
+    "val_loss": 3.2514,
+    "perplexity": 25.83,
+    "throughput_tok_per_sec": 48.5,
+    "latency_ms_per_token": 20.6
+  },
+  "footprint": {
+    "total_parameters": 134515200,
+    "fp16_size_mb": 269.1,
+    "packed_2bit_mb": 269.1,
+    "compression_ratio_vs_fp16": "1.00x"
+  },
+  "generation_sample": "Once upon a time, a little girl named Lily found a shiny red key in the garden. She asked her mother what it opened."
+}
