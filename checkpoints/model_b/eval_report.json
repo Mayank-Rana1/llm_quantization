@@ -10,27 +10,27 @@
   ],
   "metrics": {
     "tinystories": {
-      "loss": 2.9804,
-      "perplexity": 19.7
+      "loss": 1.335,
+      "perplexity": 3.8
     },
     "wikitext": {
-      "loss": 3.3945,
-      "perplexity": 29.8
+      "loss": 4.3889,
+      "perplexity": 80.55
     },
     "alpaca": {
-      "loss": 3.2027,
-      "perplexity": 24.6
+      "loss": 2.6042,
+      "perplexity": 13.52
     },
-    "val_loss": 2.9804,
-    "perplexity": 19.7,
-    "throughput_tok_per_sec": 48.2,
-    "latency_ms_per_token": 20.7
+    "val_loss": 1.335,
+    "perplexity": 3.8,
+    "throughput_tok_per_sec": 29.0,
+    "latency_ms_per_token": 34.48
   },
   "footprint": {
     "total_parameters": 134515200,
-    "fp16_size_mb": 269.1,
-    "packed_2bit_mb": 269.1,
+    "fp16_size_mb": 256.6,
+    "packed_2bit_mb": 256.6,
     "compression_ratio_vs_fp16": "1.00x"
   },
-  "generation_sample": "Once upon a time, a little girl named Lily found a small lost bird in the forest. She gave it water and it sang a sweet song."
+  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who lived in a big, cozy house with his family. Spot loved to play with his toys and run around the house. One day, Spot's owner, a kind and gentle cat named Whiskers"
 }

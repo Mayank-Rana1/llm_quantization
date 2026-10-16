@@ -80,8 +80,10 @@ class TernaryLinear(nn.Module):
 
 
 def replace_linear_layers(module: nn.Module, threshold_factor: float = 0.7) -> None:
-    """Recursively replaces all nn.Linear layers with TernaryLinear."""
+    """Recursively replaces all nn.Linear layers with TernaryLinear, preserving lm_head (BitNet b1.58 standard)."""
     for name, child in list(module.named_children()):
+        if name == "lm_head":
+            continue  # Keep output projection in full precision to maintain vocabulary resolution
         if isinstance(child, nn.Linear):
             setattr(module, name, TernaryLinear(child, threshold_factor=threshold_factor))
         else:
@@ -269,9 +271,9 @@ def run_training(
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    # 2. Student Model
+    # 2. Student Model (float32 for stable latent master weights)
     print("Loading student model...")
-    student = AutoModelForCausalLM.from_pretrained(student_model_name)
+    student = AutoModelForCausalLM.from_pretrained(student_model_name, torch_dtype=torch.float32)
     student = student.to(device)
 
     # Apply Ternary QAT if mode specifies 'qat'
@@ -283,12 +285,15 @@ def run_training(
 
     student.train()
 
-    # 3. Teacher Model (if KD is used)
+    # 3. Teacher Model (if KD is used, float16 for fast inference)
     use_kd = "kd" in mode
     teacher = None
     if use_kd:
         print("Loading teacher model for Knowledge Distillation...")
-        teacher = AutoModelForCausalLM.from_pretrained(teacher_model_name)
+        teacher = AutoModelForCausalLM.from_pretrained(
+            teacher_model_name,
+            torch_dtype=torch.float16 if device == "cuda" else torch.float32
+        )
         teacher = teacher.to(device)
         teacher.eval()
         for p in teacher.parameters():
@@ -345,7 +350,7 @@ def run_training(
                 with torch.no_grad():
                     with torch.autocast(device_type=device, dtype=amp_dtype, enabled=(device == "cuda")):
                         t_out = teacher(input_ids=input_ids, attention_mask=attention_mask)
-                        teacher_logits = t_out.logits
+                        teacher_logits = t_out.logits.float()
 
             # Student Forward
             with torch.autocast(device_type=device, dtype=amp_dtype, enabled=(device == "cuda")):
@@ -394,6 +399,13 @@ def run_training(
                 "ce_loss": float(ce_loss.item()),
                 "kd_loss": float(kd.item())
             })
+
+            # Intermediate periodic checkpoint every 250 steps
+            if global_step % 250 == 0:
+                student.save_pretrained(out_path)
+                tokenizer.save_pretrained(out_path)
+                with open(out_path / "checkpoint_progress.json", "w", encoding="utf-8") as f:
+                    json.dump({"last_saved_step": global_step, "total_steps": total_steps, "history": history}, f)
 
     elapsed = time.time() - start_time
     avg_ce = epoch_ce / max(len(dataloader), 1)

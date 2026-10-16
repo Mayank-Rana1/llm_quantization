@@ -10,27 +10,27 @@
   ],
   "metrics": {
     "tinystories": {
-      "loss": 3.2514,
-      "perplexity": 25.83
+      "loss": 1.2754,
+      "perplexity": 3.58
     },
     "wikitext": {
-      "loss": 3.6494,
-      "perplexity": 38.45
+      "loss": 4.6183,
+      "perplexity": 101.32
     },
     "alpaca": {
-      "loss": 3.4688,
-      "perplexity": 32.1
+      "loss": 2.8976,
+      "perplexity": 18.13
     },
-    "val_loss": 3.2514,
-    "perplexity": 25.83,
-    "throughput_tok_per_sec": 48.5,
-    "latency_ms_per_token": 20.6
+    "val_loss": 1.2754,
+    "perplexity": 3.58,
+    "throughput_tok_per_sec": 26.5,
+    "latency_ms_per_token": 37.74
   },
   "footprint": {
     "total_parameters": 134515200,
-    "fp16_size_mb": 269.1,
-    "packed_2bit_mb": 269.1,
+    "fp16_size_mb": 256.6,
+    "packed_2bit_mb": 256.6,
     "compression_ratio_vs_fp16": "1.00x"
   },
-  "generation_sample": "Once upon a time, a little girl named Lily found a shiny red key in the garden. She asked her mother what it opened."
+  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who lived in a big house with his family. Spot was very happy and loved to play with his friends. One day, Spot's owner, a kind lady, took him to the park to play."
 }

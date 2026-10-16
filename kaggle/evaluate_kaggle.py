@@ -26,12 +26,15 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 def hard_ternarize_model(model: nn.Module, threshold_factor: float = 0.7) -> nn.Module:
     """
-    Snaps all 2D Linear weight matrices into strict deployed ternary weights {-Delta, 0, +Delta}.
-    Guarantees that evaluation reflects the exact deployed model.
+    Snaps linear projection weights into strict deployed ternary states {-Delta, 0, +Delta}.
+    Preserves embed_tokens and lm_head in full precision (BitNet b1.58 protocol).
     """
     with torch.no_grad():
         for name, param in model.named_parameters():
             if "weight" in name and param.dim() == 2:
+                # BitNet b1.58 standard: preserve vocabulary projections in full precision
+                if "embed_tokens" in name or "lm_head" in name:
+                    continue
                 scale = param.abs().mean().clamp_min(1e-8)
                 threshold = threshold_factor * scale
                 param.copy_(
@@ -138,10 +141,12 @@ def benchmark_generation(
     start = time.perf_counter()
     output = model.generate(
         **inputs,
+        min_new_tokens=20,
         max_new_tokens=max_new_tokens,
         do_sample=True,
         temperature=0.7,
         top_p=0.9,
+        repetition_penalty=1.15,
         pad_token_id=tokenizer.eos_token_id
     )
     duration = time.perf_counter() - start
@@ -161,37 +166,6 @@ def benchmark_generation(
         "ms_per_token": round(ms_per_tok, 2)
     }
 
-
-def evaluate_checkpoint(
-    ckpt_path: str,
-    base_model_name: str = "HuggingFaceTB/SmolLM-135M",
-    is_ternary: bool = False,
-    threshold_factor: float = 0.7,
-    num_eval_samples: int = 100,
-    device: str = "cuda" if torch.cuda.is_available() else "cpu",
-    output_json: Optional[str] = None
-) -> Dict[str, Any]:
-    print(f"\n=======================================================")
-    print(f"Evaluating Model: {ckpt_path} (Ternary = {is_ternary})")
-    print(f"Device: {device}")
-    print(f"=======================================================")
-
-    tokenizer = AutoTokenizer.from_pretrained(ckpt_path if Path(ckpt_path).exists() else base_model_name)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
-
-    print("Loading model weights...")
-    model = AutoModelForCausalLM.from_pretrained(ckpt_path).to(device)
-
-    if is_ternary:
-        print("Applying hard deployment ternarization {-Delta, 0, +Delta}...")
-        model = hard_ternarize_model(model, threshold_factor=threshold_factor)
-
-    # 1. Size metrics
-    sizes = calculate_model_sizes(model)
-    print(f"Model Parameters: {sizes['total_parameters']:,}")
-    print(f"FP16 Footprint: {sizes['fp16_size_mb']} MB")
-    print(f"Packed 2-bit Footprint: {sizes['packed_2bit_mb']} MB ({sizes['compression_ratio_vs_fp16']})")
 
 def load_eval_dataset_texts(dataset_name: str, num_samples: int = 100) -> List[str]:
     name_lower = dataset_name.lower()

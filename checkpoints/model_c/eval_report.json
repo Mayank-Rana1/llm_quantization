@@ -1,6 +1,6 @@
 {
   "model_key": "model_c",
-  "name": "Model C (Ternary QAT alone)",
+  "name": "Model C (Ternary QAT)",
   "mode": "qat",
   "is_ternary": true,
   "datasets_evaluated": [
@@ -10,27 +10,27 @@
   ],
   "metrics": {
     "tinystories": {
-      "loss": 4.1205,
-      "perplexity": 61.59
+      "loss": 6.6165,
+      "perplexity": 747.3
     },
     "wikitext": {
-      "loss": 4.4908,
-      "perplexity": 89.2
+      "loss": 10.3483,
+      "perplexity": 31202.41
     },
     "alpaca": {
-      "loss": 4.3081,
-      "perplexity": 74.3
+      "loss": 8.9652,
+      "perplexity": 7826.27
     },
-    "val_loss": 4.1205,
-    "perplexity": 61.59,
-    "throughput_tok_per_sec": 49.1,
-    "latency_ms_per_token": 20.3
+    "val_loss": 6.6165,
+    "perplexity": 747.3,
+    "throughput_tok_per_sec": 12.1,
+    "latency_ms_per_token": 82.64
   },
   "footprint": {
     "total_parameters": 134515200,
-    "fp16_size_mb": 269.1,
-    "packed_2bit_mb": 34.2,
-    "compression_ratio_vs_fp16": "7.87x"
+    "fp16_size_mb": 256.6,
+    "packed_2bit_mb": 32.1,
+    "compression_ratio_vs_fp16": "7.99x"
   },
-  "generation_sample": "Once upon a time, Lily found key. The key was big and dog was there. They play with ball."
+  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who was was was to a was was to a was was was to was.. was was was was was was was... was was was was was was was was was was was..."
 }

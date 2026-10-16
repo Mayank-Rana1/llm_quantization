@@ -1,6 +1,6 @@
 {
   "model_key": "model_d",
-  "name": "Model D (KD + Ternary QAT - Core Baseline)",
+  "name": "Model D (KD + Ternary QAT)",
   "mode": "kd_qat",
   "is_ternary": true,
   "datasets_evaluated": [
@@ -10,27 +10,27 @@
   ],
   "metrics": {
     "tinystories": {
-      "loss": 3.5218,
-      "perplexity": 33.85
+      "loss": 6.8974,
+      "perplexity": 989.65
     },
     "wikitext": {
-      "loss": 3.8523,
-      "perplexity": 47.1
+      "loss": 9.3998,
+      "perplexity": 12086.42
     },
     "alpaca": {
-      "loss": 3.6763,
-      "perplexity": 39.5
+      "loss": 8.6501,
+      "perplexity": 5710.66
     },
-    "val_loss": 3.5218,
-    "perplexity": 33.85,
-    "throughput_tok_per_sec": 49.0,
-    "latency_ms_per_token": 20.4
+    "val_loss": 6.8974,
+    "perplexity": 989.65,
+    "throughput_tok_per_sec": 12.0,
+    "latency_ms_per_token": 83.33
   },
   "footprint": {
     "total_parameters": 134515200,
-    "fp16_size_mb": 269.1,
-    "packed_2bit_mb": 34.2,
-    "compression_ratio_vs_fp16": "7.87x"
+    "fp16_size_mb": 256.6,
+    "packed_2bit_mb": 32.1,
+    "compression_ratio_vs_fp16": "7.99x"
   },
-  "generation_sample": "Once upon a time, a little girl named Lily found a shiny silver box. Inside, she saw a happy surprise and smiled brightly."
+  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who.................................................................................................................."
 }
