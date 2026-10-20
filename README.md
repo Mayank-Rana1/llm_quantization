@@ -30,22 +30,31 @@ This repository implements **Quantization-Aware Ternary Distillation (QAT-TD)** 
 
 ```mermaid
 flowchart LR
-    D["Multi-Domain Corpus\n(TinyStories, WikiText, Alpaca)"] --> T["Teacher: SmolLM-360M\n(FP16 Frozen)"]
-    D --> S["Student: SmolLM-135M\n(Latent FP32 Master)"]
-    S -->|Scale Δ = mean(|W|)| Q["1.58-bit Linear Layers\n{-Δ, 0, +Δ}"]
-    T -->|Soft Targets (τ=2.0)| KD["KD Loss (KL-Div)"]
-    Q -->|Student Logits| KD & CE["CE Loss (Next-Token)"]
-    KD & CE -->|STE Identity Bypass (dL/dW)| S
+    D["Multi-Domain Corpus<br>(TinyStories, WikiText, Alpaca)"]
+    T["Teacher: SmolLM-360M<br>(FP16 Frozen)"]
+    S["Student: SmolLM-135M<br>(Latent FP32 Master)"]
+    Q["1.58-bit Linear Layers<br>{-Δ, 0, +Δ}"]
+    KD["KD Loss (KL-Div, τ=2.0)"]
+    CE["CE Loss (Next-Token)"]
+
+    D --> T
+    D --> S
+    S -->|"Dynamic Scale Δ"| Q
+    T -->|"Soft Targets"| KD
+    Q -->|"Student Logits"| KD
+    Q -->|"Student Logits"| CE
+    KD -->|"STE Gradient"| S
+    CE -->|"STE Gradient"| S
 ```
 
 ### 2. 2×2 Factorial Experimental Design
 
 ```mermaid
 graph LR
-    A["Model A\n(FP16 Baseline)"] -->|Add Teacher KD| B["Model B\n(FP16 Distilled)"]
-    A -->|Apply 1.58-bit QAT| C["Model C\n(Ternary Alone)"]
-    C -->|Teacher KD Rescue| D["Model D ⭐ (HERO)\n(Ternary + KD)"]
-    D -.->|Layer Saliency| E["Model E 💡\n(XAI-KD)"]
+    A["Model A<br>(FP16 Baseline)"] -->|"Add Teacher KD"| B["Model B<br>(FP16 Distilled)"]
+    A -->|"Apply 1.58-bit QAT"| C["Model C<br>(Ternary Alone)"]
+    C -->|"Teacher KD Rescue"| D["Model D ⭐ (HERO)<br>(Ternary + KD)"]
+    D -.->|"Layer Saliency"| E["Model E 💡<br>(XAI-KD)"]
 ```
 
 ---
