@@ -26,73 +26,27 @@ This repository implements **Quantization-Aware Ternary Distillation (QAT-TD)** 
 
 ## 📊 Architecture & Methodology
 
-<details>
-<summary>🔍 <b>1. High-Level Training & Distillation Pipeline</b> (Click to zoom/expand)</summary>
-<br>
-
-> Routes multi-task token inputs through the frozen teacher and ternary student with combined Cross-Entropy and temperature-softened KL Divergence loss.
+### 1. End-to-End QAT-TD Pipeline (Left-to-Right)
 
 ```mermaid
 flowchart LR
-    subgraph Data ["1. Multi-Task Inputs"]
-        D["Tri-Dataset Mixture\n(TinyStories + WikiText + Alpaca)"]
-    end
-
-    subgraph Models ["2. Dual-Model Architecture"]
-        T["Teacher: SmolLM-360M\n(Frozen FP16)"]
-        S["Student: SmolLM-135M\n(1.58-bit Ternary QAT)"]
-    end
-
-    subgraph Loss ["3. Supervised Objective"]
-        L_KD["KL Divergence (Soft Logits)\nτ = 2.0"]
-        L_CE["Next-Token Cross-Entropy\n(Hard Labels)"]
-    end
-
-    subgraph Optimization ["4. BitNet b1.58 Optimization"]
-        STE["Straight-Through Estimator\n(Identity Gradient Bypass)"]
-        OPT["AdamW Update\n(Latent FP32 Master Weights)"]
-    end
-
-    D --> T & S
-    T -->|Soft Targets| L_KD
-    S --> L_CE & L_KD
-    L_CE & L_KD --> STE --> OPT --> S
+    D["Multi-Domain Corpus\n(TinyStories, WikiText, Alpaca)"] --> T["Teacher: SmolLM-360M\n(FP16 Frozen)"]
+    D --> S["Student: SmolLM-135M\n(Latent FP32 Master)"]
+    S -->|Scale Δ = mean(|W|)| Q["1.58-bit Linear Layers\n{-Δ, 0, +Δ}"]
+    T -->|Soft Targets (τ=2.0)| KD["KD Loss (KL-Div)"]
+    Q -->|Student Logits| KD & CE["CE Loss (Next-Token)"]
+    KD & CE -->|STE Identity Bypass (dL/dW)| S
 ```
 
-</details>
-
-<details>
-<summary>🔄 <b>2. The Quantization-Aware Training (QAT) Cycle</b> (Click to zoom/expand)</summary>
-<br>
-
-> Continuous optimization cycle keeping latent FP32 master weights while snapping to dynamic ternary states $\{-\Delta, 0, +\Delta\}$ in the forward pass.
-
-```mermaid
-flowchart LR
-    A["Latent FP32 Master Weight\n(Continuous Precision)"] -->|Scale Δ = mean(|W|)| B["Ternary Quantizer\n{-Δ, 0, +Δ}"]
-    B -->|Linear Projection| C["Forward Matmul\n(x · W_q + bias)"]
-    C -->|Compute Objective| D["Combined Loss\n(α·CE + (1-α)·KD)"]
-    D -->|Backprop (STE)| E["Identity Gradient Bypass\n(dL/dW_latent = dL/dW_q)"]
-    E -->|AdamW Step| A
-```
-
-</details>
-
-<details>
-<summary>🧪 <b>3. 2×2 Factorial Experimental Matrix</b> (Click to zoom/expand)</summary>
-<br>
-
-> Controlled evaluation isolating the effects of quantization, distillation, and explainability-guided supervision.
+### 2. 2×2 Factorial Experimental Design
 
 ```mermaid
 graph LR
-    A["Model A\n(Baseline FP16)"] -->|Add Teacher KD| B["Model B\n(Distilled FP16)"]
+    A["Model A\n(FP16 Baseline)"] -->|Add Teacher KD| B["Model B\n(FP16 Distilled)"]
     A -->|Apply 1.58-bit QAT| C["Model C\n(Ternary Alone)"]
-    C -->|Rescue with Teacher KD| D["Model D ⭐ (HERO)\n(Ternary + KD)"]
-    D -->|Layer Saliency Guidance| E["Model E 💡 (EXTENSION)\n(XAI-KD + Ternary)"]
+    C -->|Teacher KD Rescue| D["Model D ⭐ (HERO)\n(Ternary + KD)"]
+    D -.->|Layer Saliency| E["Model E 💡\n(XAI-KD)"]
 ```
-
-</details>
 
 ---
 
@@ -113,15 +67,9 @@ Evaluated across all 3 benchmark datasets:
 | **Model D** | SmolLM-135M | 1.58-bit Ternary | Teacher KD + CE | 4.86 | **55.82** | **10.47** | **32.1 MB** | **8.00x** | 12.6 tok/s |
 
 
-<details>
-<summary>📊 <b>4-Panel Empirical Comparison Chart (Loss & Perplexity)</b> (Click to zoom/expand)</summary>
-<br>
-
 <p align="center">
-  <img src="results/experiment_comparison.png" alt="Empirical Comparison Chart" width="850"/>
+  <img src="results/experiment_comparison.png" alt="Empirical Benchmark Comparison" width="720"/>
 </p>
-
-</details>
 
 ### Key Empirical Findings:
 
