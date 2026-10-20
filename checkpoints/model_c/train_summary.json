@@ -1,125 +1,16 @@
 {
   "mode": "qat",
-  "model_name": "Model C (Ternary QAT)",
-  "total_steps": 937,
-  "initial_loss": 13.099,
-  "final_loss": 2.6588,
-  "final_ce": 2.6588,
-  "final_kd": 0.0,
-  "history_sample": [
-    {
-      "step": 1,
-      "loss": 13.099,
-      "ce": 13.099,
-      "kd": 0.0
-    },
-    {
-      "step": 51,
-      "loss": 5.9604,
-      "ce": 5.9604,
-      "kd": 0.0
-    },
-    {
-      "step": 101,
-      "loss": 4.9559,
-      "ce": 4.9559,
-      "kd": 0.0
-    },
-    {
-      "step": 151,
-      "loss": 4.3586,
-      "ce": 4.3586,
-      "kd": 0.0
-    },
-    {
-      "step": 201,
-      "loss": 3.9457,
-      "ce": 3.9457,
-      "kd": 0.0
-    },
-    {
-      "step": 251,
-      "loss": 3.8457,
-      "ce": 3.8457,
-      "kd": 0.0
-    },
-    {
-      "step": 301,
-      "loss": 3.7883,
-      "ce": 3.7883,
-      "kd": 0.0
-    },
-    {
-      "step": 351,
-      "loss": 3.4414,
-      "ce": 3.4414,
-      "kd": 0.0
-    },
-    {
-      "step": 401,
-      "loss": 3.3702,
-      "ce": 3.3702,
-      "kd": 0.0
-    },
-    {
-      "step": 451,
-      "loss": 3.3753,
-      "ce": 3.3753,
-      "kd": 0.0
-    },
-    {
-      "step": 501,
-      "loss": 3.4295,
-      "ce": 3.4295,
-      "kd": 0.0
-    },
-    {
-      "step": 551,
-      "loss": 3.1863,
-      "ce": 3.1863,
-      "kd": 0.0
-    },
-    {
-      "step": 601,
-      "loss": 3.2376,
-      "ce": 3.2376,
-      "kd": 0.0
-    },
-    {
-      "step": 651,
-      "loss": 2.9381,
-      "ce": 2.9381,
-      "kd": 0.0
-    },
-    {
-      "step": 701,
-      "loss": 3.0917,
-      "ce": 3.0917,
-      "kd": 0.0
-    },
-    {
-      "step": 751,
-      "loss": 3.1201,
-      "ce": 3.1201,
-      "kd": 0.0
-    },
-    {
-      "step": 801,
-      "loss": 3.0228,
-      "ce": 3.0228,
-      "kd": 0.0
-    },
-    {
-      "step": 851,
-      "loss": 2.8764,
-      "ce": 2.8764,
-      "kd": 0.0
-    },
-    {
-      "step": 901,
-      "loss": 2.8573,
-      "ce": 2.8573,
-      "kd": 0.0
-    }
-  ]
+  "student_model": "HuggingFaceTB/SmolLM-135M",
+  "teacher_model": null,
+  "num_samples": 30000,
+  "epochs": 1,
+  "batch_size": 16,
+  "learning_rate": 3e-4,
+  "alpha": 1.0,
+  "temperature": null,
+  "is_quantized": true,
+  "training_steps": 3731,
+  "final_avg_loss": 2.0406,
+  "final_avg_ce": 2.0406,
+  "dataset": "Tri-Dataset Mixture (60% TinyStories, 20% WikiText-103, 20% Alpaca-52K)"
 }

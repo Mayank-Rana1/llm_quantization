@@ -1,0 +1,5 @@
+Model ID,Architecture,Precision,Supervision,TinyStories PPL (In-Domain),WikiText-103 PPL (Zero-Shot),Alpaca-52K PPL (Instructions),Model Footprint (MB),Compression Ratio,Throughput (tok/s)
+Model A,SmolLM-135M,16-bit FP16,Hard Labels (Cross-Entropy),3.35,15.65,4.32,256.6,1.00x (Baseline),27.9
+Model B,SmolLM-135M,16-bit FP16,Teacher KD + Hard Labels (T=2.0),3.68,17.02,4.93,256.6,1.00x,28.9
+Model C,SmolLM-135M,"1.58-bit Ternary {-Delta, 0, +Delta}",Hard Labels (Cross-Entropy),4.78,67.4,10.99,32.1,8.00x,12.6
+Model D (Hero),SmolLM-135M,"1.58-bit Ternary {-Delta, 0, +Delta}",Teacher KD + Hard Labels (T=2.0),4.86,55.82,10.47,32.1,8.00x,12.6

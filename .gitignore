@@ -9,3 +9,21 @@ venv/
 .cph/
 scratch/
 *.pdf
+
+# Documents, Presentations, and Report Outputs
+*.docx
+*.docs
+*.pptx
+*.html
+report/
+output/
+PPT_README.md
+
+# Report generation and document compilation scripts
+build_*.py
+generate_*.py
+compile_*.py
+make_html_report.py
+report_content.py
+report_sections_*.py
+present.py

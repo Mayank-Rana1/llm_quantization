@@ -1,0 +1,34 @@
+{
+  "Model A (Baseline FP16)": {
+    "predictions": {
+      "story_tinystories": "Once upon a time, there was a little friendly dog named Spot who lived in the woods. Spot loved to play outside and explore his surroundings with his best friend, a squirrel named Sammy.\n\nOne day, while they were playing, Spot noticed that Sammy had been acting very strange. He",
+      "factual_wikitext": "The solar system consists of the Sun and the objects that orbit it, including planets such as Earth . The Sun 's core is composed mainly of hydrogen , helium , and other elements with different chemical compositions . Other components include iron , nickel , and various metals . The outer atmosphere of the Sun contains a",
+      "instruction_alpaca": "Below is an instruction that describes a task.\n### Instruction: List three primary colors.\n### Response: Red, Blue and Yellow. \nInput: Red, Blue and Yellow are the three primary colours of the rainbow. \n\nResponse : Red, Blue and Yellow. \nRed = (256) / "
+    },
+    "sample_generation": "Once upon a time, there was a little friendly dog named Spot who lived in the woods. Spot loved to play outside and explore his surroundings with his best friend, a squirrel named Sammy.\n\nOne day, while they were playing, Spot noticed that Sammy had been acting very strange. He"
+  },
+  "Model B (Distilled FP16)": {
+    "predictions": {
+      "story_tinystories": "Once upon a time, there was a little friendly dog named Spot who lived in a big house with his family. Spot loved to play fetch and chase balls around the yard. One day, while playing catch with his owner, he accidentally knocked over a ball that fell on the floor of his home",
+      "factual_wikitext": "The solar system consists of the Sun and the objects that orbit it, including planets , moons and asteroids . The Earth is a sphere with an average radius of 6.389 km (10 @,@ 458 mi ) . The sun orbits around the Earth at approximately ",
+      "instruction_alpaca": "Below is an instruction that describes a task.\n### Instruction: List three primary colors.\n### Response: The two colors are red and yellow, which can be used to make the following color combination.\n```python\n# Three primary colors (red, yellow, blue)\n```\n**Response:** Red = 10"
+    },
+    "sample_generation": "Once upon a time, there was a little friendly dog named Spot who lived in a big house with his family. Spot loved to play fetch and chase balls around the yard. One day, while playing catch with his owner, he accidentally knocked over a ball that fell on the floor of his home"
+  },
+  "Model C (Ternary QAT)": {
+    "predictions": {
+      "story_tinystories": "Once upon a time, there was a little friendly dog named Spot who loved to play with his toy cars. One day, he found a big box in the park and wanted to make it more fun than before. But when he tried to open the box, he accidentally broke it up!\n",
+      "factual_wikitext": "The solar system consists of the Sun and the objects that orbit it, including the sun and moon. The Sun is composed by a small planet called Jupiter. Jupiter is also called Jupiter because it orbits around Jupiter. Jupiter is a small planet with different colors than Jupiter and Neptune. It orbits Jupiter in a",
+      "instruction_alpaca": "Below is an instruction that describes a task.\n### Instruction: List three primary colors.\n### Response: 1, 2, 3, 4, 5, 6, 8, 9 , 3, 4, 5, 4, 5, 4, 5,"
+    },
+    "sample_generation": "Once upon a time, there was a little friendly dog named Spot who loved to play with his toy cars. One day, he found a big box in the park and wanted to make it more fun than before. But when he tried to open the box, he accidentally broke it up!\n"
+  },
+  "Model D (KD + Ternary QAT)": {
+    "predictions": {
+      "story_tinystories": "Once upon a time, there was a little friendly dog named Spot who loved to play with his ball. One day, while playing fetch in the park, he noticed that the ground beneath him was full of dirt and dirt. He thought it looked fun to explore!\n\nSpot went up",
+      "factual_wikitext": "The solar system consists of the Sun and the objects that orbit it, including the sun, moon, planets , moons, Venus, Jupiter, Venus and Neptune . The Earth orbits a rotation around the Sun's axis.\n1209: Jupiter is orbiting close to Saturn. It orbits about ",
+      "instruction_alpaca": "Below is an instruction that describes a task.\n### Instruction: List three primary colors.\n### Response: \"Harry\" and \"Jay\".\n1. Craying, \"Grown!\"\n2. Charmon, \"I am the driver of your train.\"\n3. Braying, \"Hello"
+    },
+    "sample_generation": "Once upon a time, there was a little friendly dog named Spot who loved to play with his ball. One day, while playing fetch in the park, he noticed that the ground beneath him was full of dirt and dirt. He thought it looked fun to explore!\n\nSpot went up"
+  }
+}

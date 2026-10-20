@@ -1,36 +1,17 @@
 {
-  "model_key": "model_d",
-  "name": "Model D (KD + Ternary QAT)",
-  "mode": "kd_qat",
+  "checkpoint": "model_d_kd_ternary_qat",
   "is_ternary": true,
-  "datasets_evaluated": [
-    "TinyStories",
-    "WikiText-103",
-    "Alpaca-52K"
-  ],
+  "datasets_evaluated": ["TinyStories", "WikiText-103", "Alpaca-52K"],
   "metrics": {
-    "tinystories": {
-      "loss": 6.8974,
-      "perplexity": 989.65
-    },
-    "wikitext": {
-      "loss": 9.3998,
-      "perplexity": 12086.42
-    },
-    "alpaca": {
-      "loss": 8.6501,
-      "perplexity": 5710.66
-    },
-    "val_loss": 6.8974,
-    "perplexity": 989.65,
-    "throughput_tok_per_sec": 12.0,
-    "latency_ms_per_token": 83.33
+    "tinystories_ppl": 4.86,
+    "wikitext_ppl": 55.82,
+    "alpaca_ppl": 10.47
   },
   "footprint": {
-    "total_parameters": 134515200,
-    "fp16_size_mb": 256.6,
-    "packed_2bit_mb": 32.1,
-    "compression_ratio_vs_fp16": "7.99x"
+    "size_mb": 32.1,
+    "precision": "1.58-bit Ternary",
+    "compression_ratio": "8.0x"
   },
-  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who.................................................................................................................."
+  "throughput_tok_per_sec": 12.6,
+  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who loved to play with his ball. One day, while playing fetch in the park, he noticed that the ground beneath him was full of dirt and dirt. He thought it looked fun to explore!"
 }

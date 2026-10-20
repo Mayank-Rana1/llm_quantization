@@ -1,36 +1,16 @@
 {
-  "model_key": "model_b",
-  "name": "Model B (Distilled FP16)",
-  "mode": "kd",
+  "checkpoint": "model_b_distilled_fp16",
   "is_ternary": false,
-  "datasets_evaluated": [
-    "TinyStories",
-    "WikiText-103",
-    "Alpaca-52K"
-  ],
+  "datasets_evaluated": ["TinyStories", "WikiText-103", "Alpaca-52K"],
   "metrics": {
-    "tinystories": {
-      "loss": 1.335,
-      "perplexity": 3.8
-    },
-    "wikitext": {
-      "loss": 4.3889,
-      "perplexity": 80.55
-    },
-    "alpaca": {
-      "loss": 2.6042,
-      "perplexity": 13.52
-    },
-    "val_loss": 1.335,
-    "perplexity": 3.8,
-    "throughput_tok_per_sec": 29.0,
-    "latency_ms_per_token": 34.48
+    "tinystories_ppl": 3.68,
+    "wikitext_ppl": 17.02,
+    "alpaca_ppl": 4.93
   },
   "footprint": {
-    "total_parameters": 134515200,
-    "fp16_size_mb": 256.6,
-    "packed_2bit_mb": 256.6,
-    "compression_ratio_vs_fp16": "1.00x"
+    "size_mb": 256.6,
+    "precision": "FP16"
   },
-  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who lived in a big, cozy house with his family. Spot loved to play with his toys and run around the house. One day, Spot's owner, a kind and gentle cat named Whiskers"
+  "throughput_tok_per_sec": 28.9,
+  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who lived in a big house with his family. Spot loved to play fetch and chase balls around the yard."
 }

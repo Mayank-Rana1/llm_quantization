@@ -1,0 +1,182 @@
+[
+  {
+    "model_key": "model_a",
+    "name": "Model A (Baseline FP16)",
+    "mode": "baseline",
+    "is_ternary": false,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
+    "metrics": {
+      "tinystories": {
+        "loss": 3.2514,
+        "perplexity": 25.83
+      },
+      "wikitext": {
+        "loss": 3.6494,
+        "perplexity": 38.45
+      },
+      "alpaca": {
+        "loss": 3.4688,
+        "perplexity": 32.1
+      },
+      "val_loss": 3.2514,
+      "perplexity": 25.83,
+      "throughput_tok_per_sec": 48.5,
+      "latency_ms_per_token": 20.6
+    },
+    "footprint": {
+      "total_parameters": 134515200,
+      "fp16_size_mb": 269.1,
+      "packed_2bit_mb": 269.1,
+      "compression_ratio_vs_fp16": "1.00x"
+    },
+    "generation_sample": "Once upon a time, a little girl named Lily found a shiny red key in the garden. She asked her mother what it opened."
+  },
+  {
+    "model_key": "model_b",
+    "name": "Model B (Distilled FP16)",
+    "mode": "kd",
+    "is_ternary": false,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
+    "metrics": {
+      "tinystories": {
+        "loss": 2.9804,
+        "perplexity": 19.7
+      },
+      "wikitext": {
+        "loss": 3.3945,
+        "perplexity": 29.8
+      },
+      "alpaca": {
+        "loss": 3.2027,
+        "perplexity": 24.6
+      },
+      "val_loss": 2.9804,
+      "perplexity": 19.7,
+      "throughput_tok_per_sec": 48.2,
+      "latency_ms_per_token": 20.7
+    },
+    "footprint": {
+      "total_parameters": 134515200,
+      "fp16_size_mb": 269.1,
+      "packed_2bit_mb": 269.1,
+      "compression_ratio_vs_fp16": "1.00x"
+    },
+    "generation_sample": "Once upon a time, a little girl named Lily found a small lost bird in the forest. She gave it water and it sang a sweet song."
+  },
+  {
+    "model_key": "model_c",
+    "name": "Model C (Ternary QAT alone)",
+    "mode": "qat",
+    "is_ternary": true,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
+    "metrics": {
+      "tinystories": {
+        "loss": 4.1205,
+        "perplexity": 61.59
+      },
+      "wikitext": {
+        "loss": 4.4908,
+        "perplexity": 89.2
+      },
+      "alpaca": {
+        "loss": 4.3081,
+        "perplexity": 74.3
+      },
+      "val_loss": 4.1205,
+      "perplexity": 61.59,
+      "throughput_tok_per_sec": 49.1,
+      "latency_ms_per_token": 20.3
+    },
+    "footprint": {
+      "total_parameters": 134515200,
+      "fp16_size_mb": 269.1,
+      "packed_2bit_mb": 34.2,
+      "compression_ratio_vs_fp16": "7.87x"
+    },
+    "generation_sample": "Once upon a time, Lily found key. The key was big and dog was there. They play with ball."
+  },
+  {
+    "model_key": "model_d",
+    "name": "Model D (KD + Ternary QAT - Core Baseline)",
+    "mode": "kd_qat",
+    "is_ternary": true,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
+    "metrics": {
+      "tinystories": {
+        "loss": 3.5218,
+        "perplexity": 33.85
+      },
+      "wikitext": {
+        "loss": 3.8523,
+        "perplexity": 47.1
+      },
+      "alpaca": {
+        "loss": 3.6763,
+        "perplexity": 39.5
+      },
+      "val_loss": 3.5218,
+      "perplexity": 33.85,
+      "throughput_tok_per_sec": 49.0,
+      "latency_ms_per_token": 20.4
+    },
+    "footprint": {
+      "total_parameters": 134515200,
+      "fp16_size_mb": 269.1,
+      "packed_2bit_mb": 34.2,
+      "compression_ratio_vs_fp16": "7.87x"
+    },
+    "generation_sample": "Once upon a time, a little girl named Lily found a shiny silver box. Inside, she saw a happy surprise and smiled brightly."
+  },
+  {
+    "model_key": "model_e",
+    "name": "Model E (XAI-KD + Ternary QAT - Extension)",
+    "mode": "xai_kd_qat",
+    "is_ternary": true,
+    "datasets_evaluated": [
+      "TinyStories",
+      "WikiText-103",
+      "Alpaca-52K"
+    ],
+    "metrics": {
+      "tinystories": {
+        "loss": 3.4112,
+        "perplexity": 30.3
+      },
+      "wikitext": {
+        "loss": 3.7751,
+        "perplexity": 43.6
+      },
+      "alpaca": {
+        "loss": 3.5779,
+        "perplexity": 35.8
+      },
+      "val_loss": 3.4112,
+      "perplexity": 30.3,
+      "throughput_tok_per_sec": 48.8,
+      "latency_ms_per_token": 20.5
+    },
+    "footprint": {
+      "total_parameters": 134515200,
+      "fp16_size_mb": 269.1,
+      "packed_2bit_mb": 34.2,
+      "compression_ratio_vs_fp16": "7.87x"
+    },
+    "generation_sample": "Once upon a time, a little girl named Lily found a magical little bell. When she rang it, soft music filled the sunny room."
+  }
+]

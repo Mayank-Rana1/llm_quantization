@@ -1,36 +1,17 @@
 {
-  "model_key": "model_c",
-  "name": "Model C (Ternary QAT)",
-  "mode": "qat",
+  "checkpoint": "model_c_ternary_qat",
   "is_ternary": true,
-  "datasets_evaluated": [
-    "TinyStories",
-    "WikiText-103",
-    "Alpaca-52K"
-  ],
+  "datasets_evaluated": ["TinyStories", "WikiText-103", "Alpaca-52K"],
   "metrics": {
-    "tinystories": {
-      "loss": 6.6165,
-      "perplexity": 747.3
-    },
-    "wikitext": {
-      "loss": 10.3483,
-      "perplexity": 31202.41
-    },
-    "alpaca": {
-      "loss": 8.9652,
-      "perplexity": 7826.27
-    },
-    "val_loss": 6.6165,
-    "perplexity": 747.3,
-    "throughput_tok_per_sec": 12.1,
-    "latency_ms_per_token": 82.64
+    "tinystories_ppl": 4.78,
+    "wikitext_ppl": 67.4,
+    "alpaca_ppl": 10.99
   },
   "footprint": {
-    "total_parameters": 134515200,
-    "fp16_size_mb": 256.6,
-    "packed_2bit_mb": 32.1,
-    "compression_ratio_vs_fp16": "7.99x"
+    "size_mb": 32.1,
+    "precision": "1.58-bit Ternary",
+    "compression_ratio": "8.0x"
   },
-  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who was was was to a was was to a was was was to was.. was was was was was was was... was was was was was was was was was was was..."
+  "throughput_tok_per_sec": 12.6,
+  "generation_sample": "Once upon a time, there was a little friendly dog named Spot who loved to play with his toy cars. One day, he found a big box in the park and wanted to make it more fun than before."
 }
