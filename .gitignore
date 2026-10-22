@@ -18,6 +18,8 @@ scratch/
 report/
 output/
 PPT_README.md
+PERSONAL_README.md
+run_inference.py
 
 # Report generation and document compilation scripts
 build_*.py
