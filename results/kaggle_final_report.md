@@ -10,8 +10,8 @@
 | :--- | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Model A** | Baseline Student (`SmolLM-135M`) | 16-bit FP16 | Cross-Entropy ($\mathcal{L}_{\text{CE}}$) | **3.35** | 15.65 | 4.32 | 256.6 MB | 1.00x (Ref) | 27.9 tok/s |
 | **Model B** | Distilled Student (`SmolLM-360M` $\to$ `135M`) | 16-bit FP16 | $\mathcal{L}_{\text{CE}} + \mathcal{L}_{\text{KD}}$ | 3.68 | 17.02 | 4.93 | 256.6 MB | 1.00x | 28.9 tok/s |
-| **Model C** | Ternary QAT Student | 1.58-bit $\\{- \Delta, 0, +\Delta\\}$ | Cross-Entropy ($\mathcal{L}_{\text{CE}}$) | 4.78 | 67.40 | 10.99 | **32.1 MB** | **8.00x** | 12.6 tok/s |
-| **Model D** | Distilled Ternary QAT (**Core Baseline**) | 1.58-bit $\\{- \Delta, 0, +\Delta\\}$ | $\mathcal{L}_{\text{CE}} + \mathcal{L}_{\text{KD}}$ | 4.86 | **55.82** | **10.47** | **32.1 MB** | **8.00x** | 12.6 tok/s |
+| **Model C** | Ternary QAT Student | 1.58-bit $\{\- \Delta, 0, +\Delta\}$ | Cross-Entropy ($\mathcal{L}_{\text{CE}}$) | 4.78 | 67.40 | 10.99 | **245.8 MB (19.5 MB core)** | **8.00x (core)** | 12.6 tok/s |
+| **Model D** | Distilled Ternary QAT (**Core Baseline**) | 1.58-bit $\{\- \Delta, 0, +\Delta\}$ | $\mathcal{L}_{\text{CE}} + \mathcal{L}_{\text{KD}}$ | 4.86 | **55.82** | **10.47** | **245.8 MB (19.5 MB core)** | **8.00x (core)** | 12.6 tok/s |
 
 ---
 
@@ -72,7 +72,7 @@ This validates the research question: **KD is most needed where quantization dam
 An important baseline observation: Model A (FP16 baseline) achieves very strong perplexity (**3.35 TinyStories, 15.65 WikiText**) because SmolLM-135M was extensively pre-trained by HuggingFace on a massive corpus. Our fine-tuning further improves its representations. Model B (distilled FP16) shows slightly higher perplexity (3.68 TinyStories, 17.02 WikiText) because the KD loss acts as a regularizer that softens the optimization — this is expected when the student already has strong pre-trained features.
 
 ### Finding 4: Hardware Footprint Reduction
-- Model parameters compressed from **256.6 MB to 32.1 MB** (an **8.00x reduction**).
+- Linear core parameters compressed from **155.6 MB to 19.45 MB** (an **8.00x reduction**), with total model storage at 245.85 MB uncompressed, or 26.53 MB when embeddings are tied and quantized to 2-bit.
 - Linear projections operating under 1.58-bit ternary precision reduce bandwidth bottlenecks, enabling LLM deployment on microcontrollers and embedded mobile edge devices.
 
 ### Finding 5: Training Convergence and Stability

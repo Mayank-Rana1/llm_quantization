@@ -93,13 +93,13 @@ As specified in the methodology proposal and code references, 3 distinct dataset
 | :--- | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Model A** | SmolLM-135M | FP16 | Hard Labels (CE) | **3.35** | 15.65 | 4.32 | 256.6 MB | 1.00x (Ref) | 27.9 tok/s |
 | **Model B** | SmolLM-135M | FP16 | Teacher KD + CE | 3.68 | 17.02 | 4.93 | 256.6 MB | 1.00x | 28.9 tok/s |
-| **Model C** | SmolLM-135M | 1.58-bit Ternary | Hard Labels (CE) | 4.78 | 67.40 | 10.99 | **32.1 MB** | **8.00x** | 12.6 tok/s |
-| **Model D** | SmolLM-135M | 1.58-bit Ternary | Teacher KD + CE | 4.86 | **55.82** | **10.47** | **32.1 MB** | **8.00x** | 12.6 tok/s |
+| **Model C** | SmolLM-135M | 1.58-bit Ternary | Hard Labels (CE) | 4.78 | 67.40 | 10.99 | **245.8 MB (19.5 MB core)** | **8.00x (core)** | 12.6 tok/s |
+| **Model D** | SmolLM-135M | 1.58-bit Ternary | Teacher KD + CE | 4.86 | **55.82** | **10.47** | **245.8 MB (19.5 MB core)** | **8.00x (core)** | 12.6 tok/s |
 
 ### Formal Hypotheses Verified:
 1. **Hypothesis 1 (Quantization Damage Is Real and Significant):** 1.58-bit ternary quantization degrades WikiText-103 perplexity by **+330.7%** (15.65 → 67.40) and Alpaca-52K perplexity by **+154.4%** (4.32 → 10.99), confirming that extreme quantization severely harms out-of-domain generalization while in-domain damage is moderate (+42.7%).
 2. **Hypothesis 2 (KD Rescues Out-of-Domain Generalization under Ternary QAT — Core Proof):** Under extreme 1.58-bit ternary quantization, Knowledge Distillation reduces held-out WikiText-103 perplexity by **17.2%** (from **67.40 down to 55.82**) and Alpaca-52K perplexity by **4.7%** (from **10.99 down to 10.47**). This empirically confirms that KD acts as an out-of-domain regularizer that helps discrete ternary weights generalize beyond their training distribution.
-3. **Hypothesis 3 (Edge Hardware Compression):** 1.58-bit ternary quantization achieves an **8.00x reduction in parameter memory** (from 256.6 MB down to 32.1 MB), proving feasibility for deployment on edge microcontrollers and low-resource mobile silicon.
+3. **Hypothesis 3 (Edge Hardware Compression):** 1.58-bit ternary quantization achieves an **8.00x reduction in linear core memory** (from 155.6 MB down to 19.45 MB), with total model storage at 245.85 MB uncompressed, or 26.53 MB when embeddings are tied and quantized to 2-bit, enabling on-chip SRAM residency.
 4. **Hypothesis 4 (QAT Optimization Trajectory):** The dynamic scale $\Delta = \text{mean}(|W|)$ and Straight-Through Estimator (STE) enable stable gradient descent, driving training loss down from **>13.0 to ~2.0** over 3,731 steps on GPU without gradient explosion. All ternary models converged and generated coherent, grammatical text.
 5. **Hypothesis 5 (Qualitative Coherence):** Unlike Run #1 (where a destructive embedding snapping bug caused gibberish), the ternary models now generate coherent, contextually relevant text across all 3 domains — proving that preserving vocabulary interfaces (embed_tokens, lm_head) in full precision per BitNet b1.58 is essential for ternary LLM deployment.
 
