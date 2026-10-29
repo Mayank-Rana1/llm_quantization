@@ -29,3 +29,16 @@ make_html_report.py
 report_content.py
 report_sections_*.py
 present.py
+
+# Experimental/internal scripts (not for GitHub submission)
+benchmark_packing_and_metrics.py
+bit_packing_kernel.py
+export_packed_model.py
+extended_evaluation_suite.py
+configs/
+kernels/
+checkpoints/test_packed_manifest.json
+results/HONEST_MEMORY_FOOTPRINT_ANALYSIS.md
+results/extended_evaluation_results.json
+results/honest_model_size_manifest.json
+results/unified_benchmark_results.json
