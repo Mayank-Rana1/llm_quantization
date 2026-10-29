@@ -8,18 +8,24 @@ venv/
 *.pyc
 .cph/
 scratch/
-*.pdf
 
-# Documents, Presentations, and Report Outputs
+# Ignore all docs/reports/slides globally, then whitelist docs/ folder
+*.pdf
 *.docx
 *.docs
 *.pptx
 *.html
+!docs/
+!docs/**
+
+# Local-only folders and files
 report/
 output/
 PPT_README.md
 PERSONAL_README.md
 run_inference.py
+test_spellcheck.docx
+test_zwsp.docx
 
 # Report generation and document compilation scripts
 build_*.py

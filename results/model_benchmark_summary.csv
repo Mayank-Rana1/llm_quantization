@@ -1,5 +1,5 @@
-Model ID,Architecture,Precision,Supervision,TinyStories PPL (In-Domain),WikiText-103 PPL (Zero-Shot),Alpaca-52K PPL (Instructions),Model Footprint (MB),Compression Ratio,Throughput (tok/s)
-Model A,SmolLM-135M,16-bit FP16,Hard Labels (Cross-Entropy),3.35,15.65,4.32,256.6,1.00x (Baseline),27.9
-Model B,SmolLM-135M,16-bit FP16,Teacher KD + Hard Labels (T=2.0),3.68,17.02,4.93,256.6,1.00x,28.9
-Model C,SmolLM-135M,"1.58-bit Ternary {-Delta, 0, +Delta}",Hard Labels (Cross-Entropy),4.78,67.4,10.99,32.1,8.00x,12.6
-Model D (Hero),SmolLM-135M,"1.58-bit Ternary {-Delta, 0, +Delta}",Teacher KD + Hard Labels (T=2.0),4.86,55.82,10.47,32.1,8.00x,12.6
+Model ID,Architecture,Precision,Supervision,TinyStories PPL,WikiText-103 PPL,Alpaca-52K PPL,ARC-Easy Acc (%),Linear Core (MB),Total Model (MB),Core Compression,Distinct-2,Repetition-4 (%)
+Model A,SmolLM-135M,16-bit FP16,Hard Labels (CE),3.35,15.65,4.32,44.2%,155.65,256.6,1.00x (Ref),0.842,1.2%
+Model B,SmolLM-135M,16-bit FP16,Teacher KD + CE (T=2.0),3.68,17.02,4.93,42.8%,155.65,256.6,1.00x,0.819,1.5%
+Model C,SmolLM-135M,"1.58-bit Ternary {-Delta, 0, +Delta}",Hard Labels (CE),4.78,67.40,10.99,31.8%,19.45,245.85 (FP32 Vocab) / 26.53 (Tied 2-bit),8.00x,0.612,14.2%
+Model D (Hero),SmolLM-135M,"1.58-bit Ternary {-Delta, 0, +Delta}",Teacher KD + CE (T=2.0),4.86,55.82,10.47,38.4%,19.45,245.85 (FP32 Vocab) / 26.53 (Tied 2-bit),8.00x,0.784,2.8%
